@@ -23,17 +23,20 @@ Example:
 		$query = 'select * from TABLE_NAME';
 		$result = mysql_query($query);
 		
-		//Output As String
-		echo sqlToCsv::toStr($result, "<br />");
-		/* Output:
-		"Column1","Column2","Column3"<br />
-		"dataA3","dataA2","dataA3"<br />
-		"dataB3","dataB2","dataB3"<br />
-		"dataC3","dataC2","dataC3"
-		*/
-	
-		//Output As File
-		echo sqlToCsv::toFile($result, "example_CSV_from_PHP");
+			//Output As String
+			echo sqlToCsv::toStr($result, "<br />");
+			/* Output:
+			"Column1","Column2","Column3"<br />
+			"dataA3","dataA2","dataA3"<br />
+			"dataB3","dataB2","dataB3"<br />
+			"dataC3","dataC2","dataC3"
+			*/
+		
+			//Output As File
+			echo sqlToCsv::toFile($result, "example_CSV_from_PHP");
+			
+			//Output changing file extension, encoding and newline character
+			//echo sqlToCsv::toFile($result, "example_CSV_from_PHP", "txt", "UTF-8", "\n");
 		
 		mysql_close ($link);
 	?>

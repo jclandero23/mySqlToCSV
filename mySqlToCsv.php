@@ -12,9 +12,7 @@ class sqlToCsv
 		{
 			$output = '"Error: ", "'.mysql_error().'"';
 			return $output;
-			//$message = 'ERROR:' . mysql_error();
-			//return $message;
-		}
+		
 		else
 		{
 			for($i = 0; $i < mysql_num_fields($result); $i++)
