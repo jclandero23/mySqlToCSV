@@ -12,13 +12,22 @@ class sqlToCsv
 		{
 			$output = '"Error: ", "'.mysql_error().'"';
 			return $output;
-		
+		}
 		else
 		{
 			for($i = 0; $i < mysql_num_fields($result); $i++)
 			{
 				$meta = mysql_fetch_field($result, $i);
-				$output .=  '"' . $meta->name . '",';
+				$contiene_coma = false;
+				if(strpos($meta->name, ",") !== false)
+					$contiene_coma = true;
+
+				$output .= $contiene_coma ? '"' : '';
+				if($contiene_coma)
+					$output .= str_replace('"', '""', $meta->name);
+				else
+					$output .= $meta->name;
+				$output .= $contiene_coma ? '",' : ',';
 			}
 			$output = substr($output, 0, strlen($output)-1);
 		
@@ -29,7 +38,16 @@ class sqlToCsv
 				for($y = 0; $y < $count; $y++)
 				{
 					$c_row = current($row);
-					$output .= '"' . str_replace('"', '\"', $c_row) . '",';
+					$contiene_coma = false;
+					if(strpos($c_row, ",") !== false)
+						$contiene_coma = true;
+
+					$output .= $contiene_coma ? '"' : '';
+					if($contiene_coma)
+						$output .= str_replace('"', '""', $c_row);
+					else
+						$output .= $c_row;
+					$output .= $contiene_coma ? '",' : ',';
 					next($row);
 				}
 				$output = substr($output, 0, strlen($output)-1);
@@ -41,7 +59,7 @@ class sqlToCsv
 	
 	public static function toFile($mysql_query, $filename, $ext = 'CSV', $charset = 'ISO-8859-1', $nl = '\n')
 	{
-		if (!$mysql_query)
+		/*if ($mysql_query==null)
 		{
 			$output = self::$DATOS_INVALIDOS;
 			return $output;
@@ -52,7 +70,11 @@ class sqlToCsv
 			header('Content-Type: text/csv; charset='.$charset);
 			header('Content-Disposition: attachment; filename='.$filename.'.'.$ext);
 			echo self::toStr($mysql_query);
-		}
+		}*/
+			header("Cache-Control: public");
+			header('Content-Type: text/csv; charset='.$charset);
+			header('Content-Disposition: attachment; filename='.$filename.'.'.$ext);
+			echo self::toStr($mysql_query);
 	}
 }
 ?>
