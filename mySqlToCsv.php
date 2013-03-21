@@ -61,7 +61,6 @@ class sqlToCsv
 	{
 		if (!$mysql_query)
 		{
-			//$output = self::$INVALID_DATA;
 			$output = 'ERROR: '.self::$INVALID_DATA;
 			return $output;
 		}
@@ -69,7 +68,7 @@ class sqlToCsv
 		{
 			header("Cache-Control: public");
 			header('Content-Type: text/csv; charset='.$charset);
-			header('Content-Disposition: attachment; filename='.$filename.'.'.$ext);
+			header('Content-Disposition: attachment; filename='.str_replace(" ", "_", $filename).'.'.str_replace(" ", "_", $ext));
 			echo self::toStr($mysql_query);
 		}
 	}
