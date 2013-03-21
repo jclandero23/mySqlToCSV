@@ -1,7 +1,7 @@
 <?php
 class sqlToCsv
 {
-	public static $DATOS_INVALIDOS = 'Datos no encontrados para generar archivo';
+	public static $INVALID_DATA = 'INVALID SQL RESULT';
 	
 	public static function toStr($mysql_query, $nl = "\n")
 	{
@@ -10,7 +10,7 @@ class sqlToCsv
 			$i = 0;
 		if (!$result)
 		{
-			$output = '"Error: ", "'.mysql_error().'"';
+			$output = 'ERROR "'.mysql_error().'"';
 			return $output;
 		}
 		else
@@ -59,9 +59,10 @@ class sqlToCsv
 	
 	public static function toFile($mysql_query, $filename, $ext = 'CSV', $charset = 'ISO-8859-1', $nl = '\n')
 	{
-		/*if ($mysql_query==null)
+		if (!$mysql_query)
 		{
-			$output = self::$DATOS_INVALIDOS;
+			//$output = self::$INVALID_DATA;
+			$output = 'ERROR: '.self::$INVALID_DATA;
 			return $output;
 		}
 		else
@@ -70,11 +71,7 @@ class sqlToCsv
 			header('Content-Type: text/csv; charset='.$charset);
 			header('Content-Disposition: attachment; filename='.$filename.'.'.$ext);
 			echo self::toStr($mysql_query);
-		}*/
-			header("Cache-Control: public");
-			header('Content-Type: text/csv; charset='.$charset);
-			header('Content-Disposition: attachment; filename='.$filename.'.'.$ext);
-			echo self::toStr($mysql_query);
+		}
 	}
 }
 ?>

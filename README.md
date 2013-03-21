@@ -3,7 +3,23 @@ mySqlToCSV
 
 Class to convert a mySQL query to a CSV File on PHP
 
-Example:
+## FUNCTIONS: ##
+
+### toFile($mysql_query, $filename, $ext = 'CSV', $charset = 'ISO-8859-1', $nl = '\n') ###
+
+$mysql_query -> The result of the mysql_query() function.
+$filename -> The name of your output file.
+$ext -> The file extension (DEFAULT: 'CSV').
+$charset -> The file charset (DEFAULT: 'ISO-8859-1').
+$nl -> New Line symbol (DEFAULT: '\n').
+
+### toStr($mysql_query, $nl = "\n") ###
+
+$mysql_query -> The result of the mysql_query() function.
+$nl -> New Line symbol (DEFAULT: '\n').
+
+
+## EXAMPLE: ##
 
 	<?php
 		require 'mySqlToCsv.php';
